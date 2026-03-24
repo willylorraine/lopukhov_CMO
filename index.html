@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ilia Lopukhov — CMO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black: #1a1a1a;
+  --dark: #111;
+  --mid: #666;
+  --light: #999;
+  --faint: #ccc;
+  --border: #e0e0e0;
+  --bg: #ffffff;
+  --bg-alt: #f0eeeb;
+  --bg-dark: #0d0d0d;
+  --white: #fff;
+  --heading: 'Space Grotesk', sans-serif;
+  --mono: 'Space Mono', monospace;
+  --body: 'Inter', -apple-system, sans-serif;
+  --max-w: 1240px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--body);
+  background: var(--bg);
+  color: var(--black);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--black); color: var(--white); }
+a { color: inherit; text-decoration: none; }
+
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  transition: background 0.5s, border-color 0.5s;
+}
+
+.nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 48px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: var(--heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav-right { display: flex; align-items: baseline; gap: 36px; }
+.nav-links { display: flex; align-items: baseline; gap: 32px; }
+
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mid);
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--black); }
+
+.nav-links a.nav-proposal {
+  color: var(--black);
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  background: none;
+  transition: all 0.3s;
+}
+.nav-links a.nav-proposal:hover {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+}
+
+.lang-btn {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: none;
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.lang-btn:hover { background: var(--black); color: var(--white); }
+
+nav.nav-dark {
+  background: rgba(13,13,13,0.95);
+  border-bottom-color: #222;
+}
+nav.nav-dark .nav-logo { color: var(--white); }
+nav.nav-dark .nav-links a { color: #555; }
+nav.nav-dark .nav-links a:hover { color: var(--white); }
+nav.nav-dark .nav-links a.nav-proposal { color: var(--white); border-color: #444; }
+nav.nav-dark .nav-links a.nav-proposal:hover { background: var(--white); color: var(--black); border-color: var(--white); }
+nav.nav-dark .lang-btn { color: var(--white); border-color: #333; }
+nav.nav-dark .lang-btn:hover { background: var(--white); color: var(--black); }
+
+/* ===== SECTIONS ===== */
+.section { padding: 140px 48px; }
+.section-inner { max-width: var(--max-w); margin: 0 auto; }
+.section--dark { background: var(--bg-dark); color: var(--white); }
+.section--alt { background: var(--bg-alt); }
+
+/* ===== ANIMATIONS ===== */
+
+/* Reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s var(--ease), transform 1s var(--ease);
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+/* Staggered children */
+.stagger > * {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.stagger.is-visible > * { opacity: 1; transform: translateY(0); }
+.stagger.is-visible > *:nth-child(1) { transition-delay: 0s; }
+.stagger.is-visible > *:nth-child(2) { transition-delay: 0.08s; }
+.stagger.is-visible > *:nth-child(3) { transition-delay: 0.16s; }
+.stagger.is-visible > *:nth-child(4) { transition-delay: 0.24s; }
+.stagger.is-visible > *:nth-child(5) { transition-delay: 0.32s; }
+.stagger.is-visible > *:nth-child(6) { transition-delay: 0.40s; }
+
+/* Split text line reveal */
+.split-line .line {
+  display: block;
+  overflow: hidden;
+}
+.split-line .line-inner {
+  display: block;
+  transform: translateY(105%);
+  transition: transform 0.9s var(--ease);
+}
+.split-line.is-visible .line-inner { transform: translateY(0); }
+.split-line.is-visible .line:nth-child(2) .line-inner { transition-delay: 0.1s; }
+.split-line.is-visible .line:nth-child(3) .line-inner { transition-delay: 0.2s; }
+
+/* Counter animation */
+.counter { font-variant-numeric: tabular-nums; }
+
+/* ===== LABELS (WQF-style monospace) ===== */
+.label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-bottom: 32px;
+}
+.section--dark .label { color: #555; }
+.hero .label { color: #555; }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 48px 100px;
+  background: var(--bg-dark);
+  position: relative;
+  overflow: hidden;
+}
+
+#heroCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 2.5s ease;
+}
+#heroCanvas.is-ready { opacity: 1; }
+
+.hero-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  width: 100%;
+  padding-top: 160px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-family: var(--heading);
+  font-size: clamp(4rem, 9vw, 8rem);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  color: var(--white);
+  margin-bottom: 40px;
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  color: #888;
+  max-width: 520px;
+  line-height: 1.75;
+  font-weight: 300;
+  margin-bottom: 80px;
+}
+
+.hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.hero-metric {
+  padding: 36px 0;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.hero-metric:last-child { border-right: none; }
+
+.hero-metric-value {
+  font-family: var(--heading);
+  font-size: clamp(2.5rem, 4vw, 3.8rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--white);
+}
+
+.hero-metric-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: #555;
+  margin-top: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ===== PROFILE ===== */
+.profile-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: start;
+}
+
+.profile-text {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--mid);
+  font-weight: 300;
+}
+.profile-text strong { color: var(--black); font-weight: 500; }
+
+.advantage {
+  padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+}
+.advantage:first-child { padding-top: 0; }
+.advantage:last-child { border-bottom: none; }
+
+.advantage-num {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--light);
+  margin-bottom: 12px;
+}
+
+.advantage h3 {
+  font-family: var(--heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.advantage p {
+  font-size: 0.85rem;
+  color: var(--mid);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ===== SECTION HEADING ===== */
+.sh {
+  font-family: var(--heading);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 72px;
+}
+.section--dark .sh { color: var(--white); }
+
+/* ===== TIMELINE ===== */
+.tl-item {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 48px;
+  padding: 48px 0;
+  border-bottom: 1px solid #1f1f1f;
+  align-items: start;
+}
+.tl-item:first-child { padding-top: 0; }
+.tl-item:last-child { border-bottom: none; }
+
+.tl-period {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: #555;
+  padding-top: 6px;
+}
+
+.tl-role {
+  font-family: var(--heading);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.tl-company {
+  font-size: 0.82rem;
+  color: #777;
+  margin-bottom: 16px;
+}
+
+.tl-desc {
+  font-size: 0.88rem;
+  color: #666;
+  line-height: 1.75;
+  font-weight: 300;
+  max-width: 580px;
+}
+
+/* ===== PHOTO AVATAR ===== */
+.avatar-block {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 40px;
+}
+
+.avatar-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 3px solid var(--black);
+  overflow: hidden;
+}
+
+.avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  display: block;
+}
+
+/* ===== RESULTS GRID ===== */
+.res-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.res-card {
+  background: var(--bg);
+  padding: 52px 40px;
+}
+
+.res-val {
+  font-family: var(--heading);
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.res-label {
+  font-size: 0.78rem;
+  color: var(--light);
+  line-height: 1.5;
+}
+
+/* ===== KEY CASE ===== */
+.case-head { margin-bottom: 72px; }
+
+.case-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+
+.case-head h3 {
+  font-family: var(--heading);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 28px;
+}
+
+.case-head p {
+  font-size: 1rem;
+  color: var(--mid);
+  line-height: 1.8;
+  max-width: 640px;
+  font-weight: 300;
+}
+
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.case-m {
+  background: var(--bg-alt);
+  padding: 40px 32px;
+}
+
+.case-m-val {
+  font-family: var(--heading);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.case-m-lbl {
+  font-size: 0.75rem;
+  color: var(--light);
+  line-height: 1.5;
+}
+
+.case-note {
+  margin-top: 40px;
+  font-size: 0.88rem;
+  color: var(--mid);
+  font-style: italic;
+  line-height: 1.75;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+/* ===== COMP TAGS ===== */
+.tags { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.tag {
+  font-family: var(--body);
+  font-size: 0.8rem;
+  font-weight: 400;
+  padding: 12px 24px;
+  border: 1px solid #2a2a2a;
+  border-radius: 100px;
+  color: #aaa;
+  transition: all 0.4s var(--ease);
+  cursor: default;
+}
+.tag:hover { background: var(--white); color: var(--black); border-color: var(--white); }
+
+/* Light tags */
+.tag--light {
+  border-color: var(--border);
+  color: var(--mid);
+}
+.tag--light:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+
+/* ===== AWARDS ===== */
+.aw-block { margin-bottom: 56px; }
+.aw-block:last-child { margin-bottom: 0; }
+
+.aw-year {
+  font-family: var(--heading);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.aw-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+}
+.aw-row:last-child { border-bottom: none; }
+
+.aw-name { font-weight: 400; }
+.aw-res { color: var(--light); font-weight: 300; }
+
+/* ===== RANKINGS ===== */
+.rank-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: #1a1a1a;
+  margin-top: 56px;
+}
+
+.rank-item {
+  background: var(--bg-dark);
+  padding: 56px 32px;
+  text-align: center;
+}
+
+.rank-num {
+  font-family: var(--heading);
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.rank-desc {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 16px;
+  line-height: 1.5;
+}
+
+.rank-src {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: #444;
+  margin-top: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ===== CLIENTS ===== */
+.clients-flex {
+  display: flex; flex-wrap: wrap; gap: 10px;
+}
+
+.cl-name {
+  font-size: 0.85rem;
+  color: var(--mid);
+  padding: 10px 22px;
+  border: 1px solid var(--border);
+  transition: all 0.3s;
+}
+.cl-name:hover { color: var(--black); border-color: var(--black); }
+
+/* ===== PROJECTS ===== */
+.proj-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.proj {
+  padding-top: 28px;
+  border-top: 2px solid var(--black);
+}
+
+.proj-title {
+  font-family: var(--heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.proj-meta {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--light);
+  letter-spacing: 0.04em;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.proj-desc {
+  font-size: 0.85rem;
+  color: var(--mid);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ===== INDUSTRY ===== */
+.ind-item {
+  font-size: 1rem;
+  color: #888;
+  padding: 20px 0;
+  border-bottom: 1px solid #1f1f1f;
+  font-weight: 300;
+  transition: color 0.3s;
+}
+.ind-item:last-child { border-bottom: none; }
+.ind-item:hover { color: var(--white); }
+
+/* ===== SIDE PROJECTS ===== */
+.side-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.side-card {
+  padding: 40px;
+  border: 1px solid var(--border);
+  transition: border-color 0.3s;
+}
+.side-card:hover { border-color: var(--black); }
+
+.side-card h3 {
+  font-family: var(--heading);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.side-card .sr {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--light);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.side-card p {
+  font-size: 0.85rem;
+  color: var(--mid);
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* ===== BRACKET BUTTON (WQF style) ===== */
+.btn-bracket {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  padding: 14px 24px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.btn-bracket::before,
+.btn-bracket::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--black);
+  border-style: solid;
+  transition: all 0.3s var(--ease);
+}
+.btn-bracket::before {
+  top: 0; left: 0;
+  border-width: 1px 0 0 1px;
+}
+.btn-bracket::after {
+  bottom: 0; right: 0;
+  border-width: 0 1px 1px 0;
+}
+.btn-bracket:hover::before,
+.btn-bracket:hover::after {
+  width: 100%; height: 100%;
+}
+
+.section--dark .btn-bracket::before,
+.section--dark .btn-bracket::after { border-color: var(--white); }
+
+/* ===== PROPOSAL CTA ===== */
+.cta-proposal {
+  text-align: center;
+  padding: 80px 48px;
+  background: var(--bg);
+}
+
+.cta-proposal-btn {
+  display: inline-block;
+  font-family: var(--heading);
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  background: var(--black);
+  padding: 22px 56px;
+  border: 2px solid var(--black);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.4s var(--ease);
+  position: relative;
+}
+
+.cta-proposal-btn:hover {
+  background: transparent;
+  color: var(--black);
+}
+
+.cta-proposal-hint {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--light);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 16px;
+}
+
+/* ===== PROPOSAL SECTION ===== */
+.proposal-intro {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--mid);
+  font-weight: 300;
+  max-width: 720px;
+  margin-bottom: 56px;
+}
+
+.principle {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 24px;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+.principle:first-child { border-top: 1px solid var(--border); }
+
+.principle-num {
+  font-family: var(--heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 1;
+  padding-top: 4px;
+}
+
+.principle-text {
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--mid);
+  font-weight: 300;
+}
+.principle-text strong { color: var(--black); font-weight: 500; }
+
+.proposal-sub {
+  margin-top: 72px;
+  margin-bottom: 40px;
+}
+
+.proposal-sub h3 {
+  font-family: var(--heading);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.proposal-sub p {
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--mid);
+  font-weight: 300;
+  max-width: 720px;
+}
+
+.budget-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+
+.budget-card {
+  background: var(--bg);
+  padding: 40px 36px;
+}
+
+.budget-card-tag {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-bottom: 16px;
+}
+
+.budget-card-val {
+  font-family: var(--heading);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.budget-card-sub {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--light);
+  letter-spacing: 0.04em;
+}
+
+.budget-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 32px;
+}
+
+.budget-table th {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--light);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 12px 0;
+  border-bottom: 1.5px solid var(--black);
+}
+
+.budget-table td {
+  font-size: 0.85rem;
+  color: var(--mid);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.budget-table td:nth-child(2),
+.budget-table td:nth-child(3),
+.budget-table th:nth-child(2),
+.budget-table th:nth-child(3) {
+  text-align: right;
+}
+
+.budget-table tr:last-child td {
+  font-weight: 600;
+  color: var(--black);
+  border-bottom: 1.5px solid var(--black);
+}
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin: 40px 0;
+}
+
+.compare-cell {
+  background: var(--bg);
+  padding: 20px 24px;
+}
+
+.compare-cell.header {
+  background: var(--bg-alt);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--light);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.compare-cell .val {
+  font-family: var(--heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.compare-cell .lbl {
+  font-size: 0.75rem;
+  color: var(--light);
+  margin-top: 2px;
+}
+
+.proposal-disclaimer {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  line-height: 1.7;
+  color: var(--mid);
+  margin-top: 48px;
+  max-width: 680px;
+}
+
+/* ===== CONTACT ===== */
+.ct-heading {
+  font-family: var(--heading);
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  margin-bottom: 56px;
+}
+
+.ct-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+
+.ct-link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px 32px;
+  border: 1px solid var(--border);
+  font-size: 0.9rem;
+  transition: all 0.3s var(--ease);
+}
+.ct-link:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+
+.ct-link-label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--light);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.ct-link:hover .ct-link-label { color: #888; }
+
+.ct-loc {
+  font-size: 0.88rem;
+  color: var(--light);
+  font-weight: 300;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  padding: 28px 48px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer p {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--light);
+  letter-spacing: 0.05em;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .section { padding: 100px 28px; }
+  .hero { padding: 0 28px 64px; }
+  .hero-inner { padding-top: 120px; }
+  .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+  .hero-metric { border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .profile-layout { grid-template-columns: 1fr; gap: 56px; }
+  .tl-item { grid-template-columns: 1fr; gap: 8px; }
+  .res-grid { grid-template-columns: 1fr 1fr; }
+  .case-grid { grid-template-columns: 1fr 1fr; }
+  .rank-grid { grid-template-columns: 1fr 1fr; }
+  .proj-row { grid-template-columns: 1fr; }
+  .side-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .nav-inner { padding: 0 28px; }
+  .cta-proposal { padding: 60px 28px; }
+  .budget-grid { grid-template-columns: 1fr; }
+  .compare-grid { grid-template-columns: 1fr; }
+  .principle { grid-template-columns: 40px 1fr; gap: 16px; }
+  footer { padding: 28px; }
+}
+
+@media (max-width: 500px) {
+  .hero h1 { font-size: 3.2rem; }
+  .hero-metrics { grid-template-columns: 1fr 1fr; }
+  .res-grid { grid-template-columns: 1fr; }
+  .case-grid { grid-template-columns: 1fr; }
+  .rank-grid { grid-template-columns: 1fr; }
+  .budget-table { font-size: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo" data-ru="Лопухов" data-en="Lopukhov">Лопухов</a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#proposal" class="nav-proposal" data-ru="Что я предлагаю" data-en="What I Propose">Что я предлагаю</a>
+        <a href="#experience" data-ru="Опыт" data-en="Experience">Опыт</a>
+        <a href="#case" data-ru="Кейс" data-en="Case">Кейс</a>
+        <a href="#awards" data-ru="Награды" data-en="Awards">Награды</a>
+        <a href="#contact" data-ru="Контакты" data-en="Contact">Контакты</a>
+      </div>
+      <button class="lang-btn" onclick="toggleLang()">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-inner">
+    <div class="label reveal" data-ru="Chief Marketing Officer" data-en="Chief Marketing Officer">Chief Marketing Officer</div>
+    <h1 class="split-line">
+      <span class="line"><span class="line-inner" data-ru="Илья" data-en="Ilia">Илья</span></span>
+      <span class="line"><span class="line-inner" data-ru="Лопухов" data-en="Lopukhov">Лопухов</span></span>
+    </h1>
+    <p class="hero-sub reveal" data-ru="Маркетинговый лидер с 13-летним опытом построения маркетинговых функций, управления P&L и создания кампаний с измеримым бизнес-результатом." data-en="Marketing leader with 13 years of experience building marketing functions, managing P&L, and delivering campaigns with measurable business impact.">Маркетинговый лидер с 13-летним опытом построения маркетинговых функций, управления P&L и создания кампаний с измеримым бизнес-результатом.</p>
+    <div class="hero-metrics stagger">
+      <div class="hero-metric">
+        <div class="hero-metric-value"><span class="counter" data-target="13">0</span></div>
+        <div class="hero-metric-label" data-ru="Лет в маркетинге" data-en="Years in marketing">Лет в маркетинге</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value"><span class="counter" data-target="37">0</span></div>
+        <div class="hero-metric-label" data-ru="Человек в команде" data-en="Team members">Человек в команде</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value">$<span class="counter" data-target="2">0</span>M</div>
+        <div class="hero-metric-label" data-ru="Маржа юнита" data-en="Unit margin">Маржа юнита</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-value"><span class="counter" data-target="30">0</span>+</div>
+        <div class="hero-metric-label" data-ru="Наград" data-en="Awards">Наград</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section section--dark" id="experience">
+  <div class="section-inner">
+    <div class="label reveal" data-ru="02 / Опыт" data-en="02 / Experience">02 / Опыт</div>
+    <h2 class="sh split-line">
+      <span class="line"><span class="line-inner" data-ru="Профессиональный" data-en="Professional">Профессиональный</span></span>
+      <span class="line"><span class="line-inner" data-ru="опыт" data-en="Experience">опыт</span></span>
+    </h2>
+    <div class="stagger">
+      <div class="tl-item">
+        <div class="tl-period">2020–2025</div>
+        <div>
+          <div class="tl-role" data-ru="Chief Creative Officer / Руководитель креативного бизнес-юнита" data-en="Chief Creative Officer / Head of Creative Business Unit">Chief Creative Officer / Руководитель креативного бизнес-юнита</div>
+          <div class="tl-company" data-ru="Realweb, Qiwi Group — Топ-3 digital-агентство России, 600–800 сотрудников" data-en="Realweb, Qiwi Group — Russia's Top-3 Digital Agency, 600–800 employees">Realweb, Qiwi Group — Топ-3 digital-агентство России, 600–800 сотрудников</div>
+          <div class="tl-desc" data-ru="Построил маркетинговое и креативное направление с нуля как автономный бизнес-юнит с собственным P&L. Управлял полным циклом: от стратегии и исследований до креативной реализации и измерения бизнес-результатов." data-en="Built the marketing and creative division from scratch as an autonomous business unit with its own P&L. Managed the full cycle: from strategy and research to creative execution and business impact measurement.">Построил маркетинговое и креативное направление с нуля как автономный бизнес-юнит с собственным P&L. Управлял полным циклом: от стратегии и исследований до креативной реализации и измерения бизнес-результатов.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="section" id="results">
+  <div class="section-inner">
+    <div class="label reveal" data-ru="03 / Результаты" data-en="03 / Results">03 / Результаты</div>
+    <h2 class="sh split-line">
+      <span class="line"><span class="line-inner" data-ru="Бизнес-результаты" data-en="Business Unit">Бизнес-результаты</span></span>
+      <span class="line"><span class="line-inner" data-ru="юнита" data-en="Results">юнита</span></span>
+    </h2>
+    <div class="res-grid stagger">
+      <div class="res-card">
+        <div class="res-val" data-ru="3 → 37" data-en="3 → 37">3 → 37</div>
+        <div class="res-label" data-ru="Рост команды за 4 года" data-en="Team growth in 4 years">Рост команды за 4 года</div>
+      </div>
+      <div class="res-card">
+        <div class="res-val">×30</div>
+        <div class="res-label" data-ru="Рост маржи: 6 млн → 180 млн ₽ (~$2M)" data-en="Margin growth: ₽6M → ₽180M (~$2M)">Рост маржи: 6 млн → 180 млн ₽ (~$2M)</div>
+      </div>
+      <div class="res-card">
+        <div class="res-val">35–40%</div>
+        <div class="res-label" data-ru="Маржинальность юнита" data-en="Unit margin">Маржинальность юнита</div>
+      </div>
+      <div class="res-card">
+        <div class="res-val">$1.6M</div>
+        <div class="res-label" data-ru="Макс. клиентский бюджет" data-en="Max client budget">Макс. клиентский бюджет</div>
+      </div>
+      <div class="res-card">
+        <div class="res-val">25% → 55%</div>
+        <div class="res-label" data-ru="WinRate тендеров" data-en="Tender win rate">WinRate тендеров</div>
+      </div>
+      <div class="res-card">
+        <div class="res-val">90%</div>
+        <div class="res-label" data-ru="Удержание клиентов в конкурентных тендерах" data-en="Client retention in competitive tenders">Удержание клиентов в конкурентных тендерах</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEY CASE -->
+<section class="section section--alt" id="case">
+  <div class="section-inner">
+    <div class="label reveal" data-ru="04 / Ключевой кейс" data-en="04 / Key Case">04 / Ключевой кейс</div>
+    <div class="case-head reveal">
+      <div class="case-tag" data-ru="Топ-50 кейсов десятилетия" data-en="Top 50 Marketing Cases of the Decade">Топ-50 кейсов десятилетия</div>
+      <h3 data-ru="СИБУР / Vivilen —&#10;#ВКЛЮЧИЦИКЛ" data-en="SIBUR / Vivilen —&#10;#ВКЛЮЧИЦИКЛ">СИБУР / Vivilen —<br>#ВКЛЮЧИЦИКЛ</h3>
+      <p data-ru="Многоуровневая маркетинговая стратегия для вывода нового B2B-продукта (экополимер) на FMCG-рынок в условиях ухода европейских компаний из России (2022–2023). Производство загружено на 20% — нужно было найти новых покупателей через изменение потребительского поведения. Двухэтапная стратегия — сначала формирование потребительского спроса (B2C), затем конверсия производителей (B2B)." data-en="Multi-level marketing strategy to launch a new B2B product (eco-polymer) into the FMCG market following the exit of European companies from Russia (2022–2023). Production capacity was at 20% utilization — the challenge was to find new buyers by shifting consumer behavior. Two-stage strategy — first building consumer demand (B2C), then converting manufacturers (B2B).">Многоуровневая маркетинговая стратегия для вывода нового B2B-продукта (экополимер) на FMCG-рынок в условиях ухода европейских компаний из России (2022–2023). Производство загружено на 20% — нужно было найти новых покупателей через изменение потребительского поведения. Двухэтапная стратегия — сначала формирование потребительского спроса (B2C), затем конверсия производителей (B2B).</p>
+    </div>
+    <div class="case-grid stagger">
+      <div class="case-m">
+        <div class="case-m-val">20% → 80%</div>
+        <div class="case-m-lbl" data-ru="Загрузка производства" data-en="Production utilization">Загрузка производства</div>
+      </div>
+      <div class="case-m">
+        <div class="case-m-val">+87%</div>
+        <div class="case-m-lbl" data-ru="Brand awareness (8.1% → 15.2%)" data-en="Brand awareness (8.1% → 15.2%)">Brand awareness (8.1% → 15.2%)</div>
+      </div>
+      <div class="case-m">
+        <div class="case-m-val">26M</div>
+        <div class="case-m-lbl" data-ru="Устройств медиаохвата (3+ касаний)" data-en="Media reach, devices (3+ impressions)">Устройств медиаохвата (3+ касаний)</div>
+      </div>
+      <div class="case-m">
+        <div class="case-m-val">6.1M</div>
+        <div class="case-m-lbl" data-ru="OOH-охват (человек)" data-en="OOH reach (people)">OOH-охват (человек)</div>
+      </div>
+      <div class="case-m">
+        <div class="case-m-val">+13.5 п.п.</div>
+        <div class="case-m-lbl" data-ru="Готовность переплачивать за экоупаковку" data-en="Willingness to pay premium for eco-packaging">Готовность переплачивать за экоупаковку</div>
+      </div>
+      <div class="case-m">
+        <div class="case-m-val">64</div>
+        <div class="case-m-lbl" data-ru="Квалифицированных B2B-лида" data-en="Qualified B2B leads">Квалифицированных B2B-лида</div>
+      </div>
+    </div>
+    <p class="case-note reveal" data-ru="Вывод продукта на полки: «Пятёрочка», «Черноголовка», G-Drive, «ЭкоНива». Кейс подтверждён директором по продажам СИБУР как инструмент, повлиявший на заключение контрактов. Вошёл в «50 кейсов, которые изменили маркетинг» (E+/Альпина, 2025)." data-en="Product launched on shelves: Pyaterochka, Chernogolovka, G-Drive, EkoNiva. Case confirmed by SIBUR's Sales Director as a direct contributor to contract closures. Included in '50 Cases That Changed Marketing' (E+/Alpina Publishing, 2025).">Вывод продукта на полки: «Пятёрочка», «Черноголовка», G-Drive, «ЭкоНива». Кейс подтверждён директором по продажам СИБУР как инструмент, повлиявший на заключение контрактов. Вошёл в «50 кейсов, которые изменили маркетинг» (E+/Альпина, 2025).</p>
+  </div>
+</section>
+
+<!-- EXPERIENCE (continued) -->
+<section class="section section--dark" id="experience-more">
+  <div class="section-inner">
+    <div class="label reveal" data-ru="Карьерный путь" data-en="Career Path">Карьерный путь</div>
+    <div class="stagger">
+      <div class="tl-item">
+        <div class="tl-period">2019–2020</div>
+        <div>
+          <div class="tl-role" data-ru="Директор по стратегии" data-en="Strategy Director">Директор по стратегии</div>
+          <div class="tl-company">Solid Media, BBDO Group</div>
+          <div class="tl-desc" data-ru="Построил стратегический отдел (работает до сих пор). Управлял медиастратегиями: перформанс-маркетинг, медиабаинг, комплексное планирование. Основная вертикаль — недвижимость." data-en="Built a strategy department (still operational today). Managed media strategies: performance marketing, media buying, integrated planning. Primary vertical — real estate.">Построил стратегический отдел (работает до сих пор). Управлял медиастратегиями: перформанс-маркетинг, медиабаинг, комплексное планирование. Основная вертикаль — недвижимость.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period">2017–2019</div>
+        <div>
+          <div class="tl-role" data-ru="Основатель / CEO" data-en="Founder / CEO">Основатель / CEO</div>
+          <div class="tl-company">Fury Creative Agency</div>
+          <div class="tl-desc" data-ru="Запустил и управлял собственным агентством. Полный цикл предпринимательства: финансы, найм, клиентский сервис, продажи. Клиенты: МКБ, Veles Finance и другие." data-en="Launched and managed an independent agency. Full entrepreneurial cycle: finance, hiring, client service, sales. Clients: MCB (Moscow Credit Bank), Veles Finance, and others.">Запустил и управлял собственным агентством. Полный цикл предпринимательства: финансы, найм, клиентский сервис, продажи. Клиенты: МКБ, Veles Finance и другие.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period">2014–2017</div>
+        <div>
+          <div class="tl-role" data-ru="Директор по стратегии и креативу" data-en="Strategy & Creative Director">Директор по стратегии и креативу</div>
+          <div class="tl-company">Digital Mind</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period">2012–2014</div>
+        <div>
+          <div class="tl-role" data-ru="Креативный стратег" data-en="Creative Strategist">Креативный стратег</div>
+          <div class="tl-company">Ingate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section class="section" id="awards">
+  <div class="section-inner">
+    <div class="label reveal" data-ru="06 / Награды" data-en="06 / Awards">06 / Награды</div>
+    <h2 class="sh split-line">
+      <span class="line"><span class="line-inner" data-ru="30+ наград" data-en="30+ Awards">30+ наград</span></span>
+      <span class="line"><span class="line-inner">(2023–2025)</span></span>
+    </h2>
+    <div class="aw-block reveal">
+      <div class="aw-year">2025</div>
+      <div class="aw-row"><span class="aw-name">Red Apple</span><span class="aw-res" data-ru="Гран-при + Золото + Серебро" data-en="Grand Prix + Gold + Silver">Гран-при + Золото + Серебро</span></div>
+      <div class="aw-row"><span class="aw-name">Mixx Russia</span><span class="aw-res" data-ru="Золото" data-en="Gold">Золото</span></div>
+      <div class="aw-row"><span class="aw-name">E+</span><span class="aw-res" data-ru="Золото + Серебро" data-en="Gold + Silver">Золото + Серебро</span></div>
+      <div class="aw-row"><span class="aw-name">ADCR</span><span class="aw-res" data-ru="Золото" data-en="Gold">Золото</span></div>
+      <div class="aw-row"><span class="aw-name">Silver Mercury</span><span class="aw-res" data-ru="Золото" data-en="Gold">Золото</span></div>
+    </div>
+    <div class="aw-block reveal">
+      <div class="aw-year">2024</div>
+      <div class="aw-row"><span class="aw-name">E+</span><span class="aw-res" data-ru="Золото + 2 Бронзы" data-en="Gold + 2 Bronze">Золото + 2 Бронзы</span></div>
+      <div class="aw-row"><span class="aw-name" data-ru="Большая Рыба (Sostav)" data-en="Big Fish (Sostav)">Большая Рыба (Sostav)</span><span class="aw-res" data-ru="Золото" data-en="Gold">Золото</span></div>
+      <div class="aw-row"><span class="aw-name">Silver Mercury</span><span class="aw-res" data-ru="2 Серебра + 3 Серебра" data-en="2 Silver + 3 Silver">2 Серебра + 3 Серебра</span></div>
+      <div class="aw-row"><span class="aw-name">Red Apple</span><span class="aw-res" data-ru="Бронза" data-en="Bronze">Бронза</span></div>
+      <div class="aw-row"><span class="aw-name">Perspectum Awards</span><span class="aw-res" data-ru="Бронза" data-en="Bronze">Бронза</span></div>
+    </div>
+    <div class="aw-block reveal">
+      <div class="aw-year">2023</div>
+      <div class="aw-row"><span class="aw-name">Silver Mercury</span><span class="aw-res" data-ru="Золото + Серебро + Бронза" data-en="Gold + Silver + Bronze">Золото + Серебро + Бронза</span></div>
+      <div class="aw-row"><span class="aw-name">E+</span><span class="aw-res" data-ru="Серебро" data-en="Silver">Серебро</span></div>
+      <div class="aw-row"><span class="aw-name">Digital Communication Awards</span><span class="aw-res" data-ru="Золото" data-en="Gold">Золото</span></div>
+      <div class="aw-row"><span class="aw-name">Perspectum</span><span class="aw-res" data-ru="Золото" data-en="Gold">Золото</span></div>
+      <div class="aw-row"><span class="aw-name" data-ru="НПБК" data-en="NPBK">НПБК</span><span class="aw-res" data-ru="Серебро" data-en="Silver">Серебро</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETENCIES -->
+<section class="section section--alt" id="competencies">
+  <div class="section-inner">
+    <div class="label reveal" data-ru="Компетенции" data-en="Competencies">Компетенции</div>
+    <h2 class="sh split-line">
+      <span class="line"><span class="line-inner" data-ru="Ключевые" data-en="Key">Ключевые</span></span>
+      <span class="line"><span class="line-inner" data-ru="компетенции" data-en="Competencies">компетенции</span></span>
+    </h2>
+    <div class="tags stagger">
+      <span class="tag" data-ru="Маркетинговая стратегия и бренд-архитектура" data-en="Marketing Strategy & Brand Architecture">Маркетинговая стратегия и бренд-архитектура</span>
+      <span class="tag" data-ru="P&L-управление" data-en="P&L Management">P&L-управление</span>
+      <span class="tag" data-ru="Построение маркетинговых команд с нуля" data-en="Building Marketing Teams from Scratch">Построение маркетинговых команд с нуля</span>
+      <span class="tag" data-ru="Интегрированные кампании (B2C + B2B)" data-en="Integrated Campaigns (B2C + B2B)">Интегрированные кампании (B2C + B2B)</span>
+      <span class="tag" data-ru="Digital-маркетинг и performance" data-en="Digital Marketing & Performance">Digital-маркетинг и performance</span>
+      <span class="tag" data-ru="Медиастратегия и медиабаинг" data-en="Media Strategy & Media Buying">Медиастратегия и медиабаинг</span>
+      <span class="tag" data-ru="AI-автоматизация маркетинговых процессов" data-en="AI-Powered Marketing Automation">AI-автоматизация маркетинговых процессов</span>
+      <span class="tag" data-ru="Ребрендинг и go-to-market" data-en="Rebranding & Go-to-Market">Ребрендинг и go-to-market</span>
+      <span class="tag" data-ru="Продуктовый маркетинг" data-en="Product Marketing">Продуктовый маркетинг</span>
+      <span class="tag" data-ru="Банковский и финансовый маркетинг" data-en="Banking & Financial Services Marketing">Банковский и финансовый маркетинг</span>
+      <span class="tag" data-ru="Работа с регулируемыми рынками" data-en="Regulated Markets">Работа с регулируемыми рынками</span>
+      <span class="tag" data-ru="Комьюнити-маркетинг и лидогенерация" data-en="Community Marketing & Lead Generation">Комьюнити-маркетинг и лидогенерация</span>
+    </div>
+  </div>
+</section>
+
+<!-- RANKINGS -->
+<section class="section section--dark" id="rankings">
+  <div class="section-inner">
+    <div class="label reveal" data-ru="07 / Рейтинги моей команды" data-en="07 / My Team's Rankings">07 / Рейтинги моей команды</div>
+    <div class="rank-grid stagger">
+      <div class="rank-item">
+        <div class="rank-num">#1</div>
+        <div class="rank-desc" data-ru="Talent Power Index — Креатив и стратегия" data-en="Talent Power Index — Creative & Strategy">Talent Power Index — Креатив и стратегия</div>
+        <div class="rank-src">Adindex 2024</div>
+      </div>
+      <div class="rank-item">
+        <div class="rank-num">#1</div>
+        <div class="rank-desc" data-ru="Креатив и продакшн — Полный цикл digital-услуг" data-en="Creative & Production — Full-Cycle Digital Services">Креатив и продакшн — Полный цикл digital-услуг</div>
+        <div class="rank-src">Adindex 2024</div>
+      </div>
+      <div class="rank-item">
+        <div class="rank-num">#9</div>
+        <div class="rank-desc" data-ru="Рейтинг эффективности коммуникационных агентств" data-en="Communication Agency Effectiveness Ranking">Рейтинг эффективности коммуникационных агентств</div>
+        <div class="rank-src" data-ru="АКАР 2024" data-en="ACAR 2024">АКАР 2024</div>
+      </div>
+      <div class="rank-item">
+        <div class="rank-num">#16</div>
+        <div class="rank-desc" data-ru="Рейтинг креативности — социальные коммуникации" data-en="Creativity Ranking — Social Communications">Рейтинг креативности — социальные коммуникации</div>
+        <div class="rank-src" data-ru="АКАР 2024" data-en="ACAR 2024">АКАР 2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section class="section" id="clients">
+  <div class="section-inner">
+    <div class="label reveal" data-ru="08 / Клиенты" data-en="08 / Clients">08 / Клиенты</div>
+    <div class="clients-flex stagger">
+      <span class="cl-name" data-ru="СИБУР" data-en="SIBUR">СИБУР</span>
+      <span class="cl-name">Yandex Education</span>
+      <span class="cl-name">Yango Ads</span>
+      <span class="cl-name">Alfa-Leasing</span>
+      <span class="cl-name" data-ru="Дом.ру" data-en="Dom.ru">Дом.ру</span>
+      <span class="cl-name" data-ru="Дом с Маяком" data-en="Dom s Mayakom">Дом с Маяком</span>
+      <span class="cl-name" data-ru="Золотое Яблоко" data-en="Zolotoe Yabloko">Золотое Яблоко</span>
+      <span class="cl-name">Tecno</span>
+      <span class="cl-name">hh.ru</span>
+      <span class="cl-name" data-ru="Ашан" data-en="Auchan">Ашан</span>
+      <span class="cl-name" data-ru="банк Blanc" data-en="Blanc Bank">банк Blanc</span>
+      <span class="cl-name" data-ru="МКБ" data-en="MCB">МКБ</span>
+      <span class="cl-name">Veles Finance</span>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND PROJECTS -->
+<section class="section section--alt" id="brand-projects">
+  <div class="section-inner">
+    <div class="label reveal" data-ru="09 / Бренд-проекты" data-en="09 / Brand Projects">09 / Бренд-проекты</div>
+    <div class="proj-row stagger">
+      <div class="proj">
+        <div class="proj-title" data-ru="Ребрендинг Realweb" data-en="Realweb Rebrand">Ребрендинг Realweb</div>
+        <div class="proj-meta">2023–2024</div>
+        <div class="proj-desc" data-ru="Новая айдентика, позиционирование, визуальная система" data-en="New identity, positioning, visual system">Новая айдентика, позиционирование, визуальная система</div>
+      </div>
+      <div class="proj">
+        <div class="proj-title" data-ru="Make It Real Agency (Ереван)" data-en="Make It Real Agency (Yerevan)">Make It Real Agency (Ереван)</div>
+        <div class="proj-meta" data-ru="Запуск нового агентства" data-en="New Agency Launch">Запуск нового агентства</div>
+        <div class="proj-desc" data-ru="Бренд-платформа, GTM-стратегия, запуск агентства (креатив + перформанс) с нуля" data-en="Brand platform, GTM strategy, launch of a new agency (creative + performance) from scratch">Бренд-платформа, GTM-стратегия, запуск агентства (креатив + перформанс) с нуля</div>
+      </div>
+      <div class="proj">
+        <div class="proj-title">RealVibe</div>
+        <div class="proj-meta" data-ru="Комьюнити и лидогенерация" data-en="Community & Lead Generation">Комьюнити и лидогенерация</div>
+        <div class="proj-desc" data-ru="Отраслевое мероприятие для топов креативной индустрии (раз в 2 месяца). Прямой бизнес-результат: до 4 входящих брифов в месяц." data-en="Industry event for top creative professionals (bi-monthly). Direct business result: up to 4 inbound briefs per month.">Отраслевое мероприятие для топов креативной индустрии (раз в 2 месяца). Прямой бизнес-результат: до 4 входящих брифов в месяц.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRY -->
+<section class="section section--dark" id="industry">
+  <div class="section-inner">
+    <div class="label reveal" data-ru="10 / Индустрия" data-en="10 / Industry">10 / Индустрия</div>
+    <h2 class="sh split-line">
+      <span class="line"><span class="line-inner" data-ru="Индустриальная" data-en="Industry">Индустриальная</span></span>
+      <span class="line"><span class="line-inner" data-ru="экспертиза" data-en="Expertise">экспертиза</span></span>
+    </h2>
+    <div class="stagger">
+      <div class="ind-item" data-ru="Член Клуба креативных директоров (с 2019)" data-en="Member of the Creative Directors Club (since 2019)">Член Клуба креативных директоров (с 2019)</div>
+      <div class="ind-item" data-ru="Жюри Silver Mercury (2023–2025, ежегодно)" data-en="Jury Member, Silver Mercury (2023–2025, annually)">Жюри Silver Mercury (2023–2025, ежегодно)</div>
+      <div class="ind-item" data-ru="Жюри Effie Russia (2019)" data-en="Jury Member, Effie Russia (2019)">Жюри Effie Russia (2019)</div>
+      <div class="ind-item" data-ru="Публикации и кейсы на Sostav.ru" data-en="Published case studies on Sostav.ru">Публикации и кейсы на Sostav.ru</div>
+    </div>
+  </div>
+</section>
+
+<!-- SIDE PROJECTS -->
+<section class="section" id="side-projects">
+  <div class="section-inner">
+    <div class="label reveal" data-ru="11 / Сайд-проекты" data-en="11 / Side Projects">11 / Сайд-проекты</div>
+    <div class="side-grid stagger">
+      <div class="side-card">
+        <h3 data-ru="«Как кости лягут»" data-en="How the Bones Lie">«Как кости лягут»</h3>
+        <div class="sr" data-ru="Исполнительный продюсер, 2024–сейчас" data-en="Executive Producer, 2024–present">Исполнительный продюсер, 2024–сейчас</div>
+        <p data-ru="YouTube-шоу. Включая разработку мобильного приложения (Claude Code, команда из 2 человек)" data-en="YouTube show. Including mobile app development (Claude Code, team of 2)">YouTube-шоу. Включая разработку мобильного приложения (Claude Code, команда из 2 человек)</p>
+      </div>
+      <div class="side-card">
+        <h3>EARNY</h3>
+        <div class="sr">CMO, 2022–2023</div>
+        <p>web3 / learn-to-earn</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS & LANGUAGES -->
+<section class="section section--alt" id="tools">
+  <div class="section-inner">
+    <div class="label reveal" data-ru="12 / Инструменты" data-en="12 / Tools">12 / Инструменты</div>
+    <div class="tags stagger" style="margin-bottom: 72px;">
+      <span class="tag tag--light" data-ru="AI-автоматизация креативного продакшна (Weavy.ai)" data-en="AI-powered creative production automation (Weavy.ai)">AI-автоматизация креативного продакшна (Weavy.ai)</span>
+      <span class="tag tag--light">Power BI</span>
+      <span class="tag tag--light">Google Analytics</span>
+      <span class="tag tag--light">Hex.tech</span>
+      <span class="tag tag--light" data-ru="Маркетинговая аналитика и data-driven подходы" data-en="Marketing analytics & data-driven approach">Маркетинговая аналитика и data-driven подходы</span>
+    </div>
+    <div class="label reveal" data-ru="Языки" data-en="Languages">Языки</div>
+    <div class="tags stagger">
+      <span class="tag tag--light" data-ru="Русский — родной" data-en="Russian — native">Русский — родной</span>
+      <span class="tag tag--light" data-ru="Английский — свободный" data-en="English — fluent">Английский — свободный</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section class="section" id="profile">
+  <div class="section-inner">
+    <div class="label reveal" data-ru="Профиль" data-en="Profile">Профиль</div>
+    <div class="profile-layout">
+      <div class="reveal">
+        <div class="avatar-block">
+          <div class="avatar-circle">
+            <img src="photo.jpg" alt="Ilia Lopukhov">
+          </div>
+        </div>
+        <p class="profile-text" data-ru="Весь карьерный путь — на стороне агентств, что даёт редкое сочетание преимуществ для позиции <strong>in-house CMO</strong>. Построил креативный бизнес-юнит внутри топ-3 digital-агентства России (<strong>Realweb, Qiwi Group</strong>) — от 3 человек до 37, от нуля до $2M маржи за 4 года. Реализовал кампанию, которая увеличила загрузку производства клиента с 20% до 80% и вошла в <strong>топ-50 маркетинговых кейсов десятилетия</strong> в России. 4 года живу в Юго-Восточной Азии. Понимаю потребительское поведение и культурные коды развивающихся рынков." data-en="My entire career has been on the agency side — which gives a rare combination of advantages for an <strong>in-house CMO</strong> role. Built a creative business unit inside Russia's top-3 digital agency (<strong>Realweb, Qiwi Group</strong>) — from 3 people to 37, from zero to $2M margin in 4 years. Delivered a campaign that increased the client's production capacity utilization from 20% to 80% — recognized as one of the <strong>top 50 marketing cases of the decade</strong> in Russia. 4 years living in Southeast Asia. Deep understanding of consumer behavior and cultural codes in emerging markets.">Весь карьерный путь — на стороне агентств, что даёт редкое сочетание преимуществ для позиции <strong>in-house CMO</strong>. Построил креативный бизнес-юнит внутри топ-3 digital-агентства России (<strong>Realweb, Qiwi Group</strong>) — от 3 человек до 37, от нуля до $2M маржи за 4 года. Реализовал кампанию, которая увеличила загрузку производства клиента с 20% до 80% и вошла в <strong>топ-50 маркетинговых кейсов десятилетия</strong> в России. 4 года живу в Юго-Восточной Азии. Понимаю потребительское поведение и культурные коды развивающихся рынков.</p>
+      </div>
+      <div class="stagger">
+        <div class="advantage">
+          <div class="advantage-num">01 / 04</div>
+          <h3 data-ru="Скорость и операционная гибкость" data-en="Speed and Operational Agility">Скорость и операционная гибкость</h3>
+          <p data-ru="Агентский режим — это результат за дни, а не за кварталы. Кампании в условиях жёстких дедлайнов и ограниченных ресурсов." data-en="Agency mode means delivering results in days, not quarters. Campaigns under tight deadlines with limited resources.">Агентский режим — это результат за дни, а не за кварталы. Кампании в условиях жёстких дедлайнов и ограниченных ресурсов.</p>
+        </div>
+        <div class="advantage">
+          <div class="advantage-num">02 / 04</div>
+          <h3 data-ru="Кросс-индустриальный опыт" data-en="Cross-Industry Experience">Кросс-индустриальный опыт</h3>
+          <p data-ru="Одновременная работа с 10–15 клиентами из финансов, ритейла, tech, промышленности и социального сектора." data-en="Simultaneously managing 10–15 clients across finance, retail, tech, manufacturing, and social impact.">Одновременная работа с 10–15 клиентами из финансов, ритейла, tech, промышленности и социального сектора.</p>
+        </div>
+        <div class="advantage">
+          <div class="advantage-num">03 / 04</div>
+          <h3 data-ru="Постоянный контакт с технологиями" data-en="Constant Exposure to Technology">Постоянный контакт с технологиями</h3>
+          <p data-ru="Агентство первым тестирует новые платформы, AI-инструменты и MarTech-решения. Фора в скорости внедрения инноваций." data-en="Agencies are the first to test new platforms, AI tools, and MarTech solutions. Head start in innovation adoption.">Агентство первым тестирует новые платформы, AI-инструменты и MarTech-решения. Фора в скорости внедрения инноваций.</p>
+        </div>
+        <div class="advantage">
+          <div class="advantage-num">04 / 04</div>
+          <h3 data-ru="P&L-мышление, а не только креатив" data-en="P&L Mindset, Not Just Creative">P&L-мышление, а не только креатив</h3>
+          <p data-ru="Управлял бизнес-юнитом как отдельным бизнесом — найм, продажи, маржинальность, удержание клиентов." data-en="Managed a business unit as a standalone business — hiring, sales, margins, client retention.">Управлял бизнес-юнитом как отдельным бизнесом — найм, продажи, маржинальность, удержание клиентов.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROPOSAL -->
+<section class="section section--alt" id="proposal">
+  <div class="section-inner">
+    <div class="label reveal" data-ru="Банк Эсхата — принципы маркетинга" data-en="Bank Eskhata — Marketing Principles">Банк Эсхата — принципы маркетинга</div>
+    <h2 class="sh split-line">
+      <span class="line"><span class="line-inner" data-ru="Что я" data-en="What I">Что я</span></span>
+      <span class="line"><span class="line-inner" data-ru="предлагаю" data-en="propose">предлагаю</span></span>
+    </h2>
+    <p class="proposal-intro reveal" data-ru="Несколько принципов, которые я предлагаю внедрить в маркетинг банка." data-en="Several principles I propose to implement in the bank's marketing.">Несколько принципов, которые я предлагаю внедрить в маркетинг банка.</p>
+
+    <div class="stagger">
+      <div class="principle">
+        <div class="principle-num">01</div>
+        <div class="principle-text" data-ru="<strong>Маркетинг по Byron Sharp:</strong> любой, кто не пользуется банком сегодня, — наша аудитория, сегментация на старте не нужна, нужен максимальный reach." data-en="<strong>Marketing by Byron Sharp:</strong> anyone not using the bank today is our audience. No segmentation needed at launch — maximum reach is key."><strong>Маркетинг по Byron Sharp:</strong> любой, кто не пользуется банком сегодня, — наша аудитория, сегментация на старте не нужна, нужен максимальный reach.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">02</div>
+        <div class="principle-text" data-ru="<strong>Юная аудитория — недооценённый актив:</strong> нужен продукт для детей (детская карта, вклад на образование) как точка входа в экосистему. Тот, кто станет клиентом через 5 лет, сейчас ему 13 — и нужно быть у него в голове уже сегодня." data-en="<strong>Young audience — an undervalued asset:</strong> a children's product (kids' card, education savings) as an ecosystem entry point. Tomorrow's client is 13 today — the bank needs to be top-of-mind now."><strong>Юная аудитория — недооценённый актив:</strong> нужен продукт для детей (детская карта, вклад на образование) как точка входа в экосистему. Тот, кто станет клиентом через 5 лет, сейчас ему 13 — и нужно быть у него в голове уже сегодня.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">03</div>
+        <div class="principle-text" data-ru="<strong>Бренд и смысл первичны:</strong> чем сильнее бренд и чем точнее его смысл, тем дешевле каждый следующий контакт и каждый следующий клиент." data-en="<strong>Brand meaning comes first:</strong> the stronger the brand and the sharper its meaning, the cheaper every subsequent contact and every new customer."><strong>Бренд и смысл первичны:</strong> чем сильнее бренд и чем точнее его смысл, тем дешевле каждый следующий контакт и каждый следующий клиент.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">04</div>
+        <div class="principle-text" data-ru="<strong>Всё ведёт в мобильное приложение:</strong> каждый канал — наружка, телек, радио, digital — работает на одно действие: скачать приложение. Мобильная пенетрация в Таджикистане — 101%, это единственный масштабируемый канал дистрибуции." data-en="<strong>Everything leads to the mobile app:</strong> every channel — outdoor, TV, radio, digital — drives one action: download the app. Mobile penetration in Tajikistan is 101% — the only scalable distribution channel."><strong>Всё ведёт в мобильное приложение:</strong> каждый канал — наружка, телек, радио, digital — работает на одно действие: скачать приложение. Мобильная пенетрация в Таджикистане — 101%, это единственный масштабируемый канал дистрибуции.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">05</div>
+        <div class="principle-text" data-ru="<strong>BHT — основа управления:</strong> знание, потребление, лояльность и атрибуты бренда измеряются ежеквартально, без этого маркетинг слепой." data-en="<strong>BHT as the management foundation:</strong> awareness, consumption, loyalty, and brand attributes measured quarterly — without it, marketing is blind."><strong>BHT — основа управления:</strong> знание, потребление, лояльность и атрибуты бренда измеряются ежеквартально, без этого маркетинг слепой.</div>
+      </div>
+    </div>
+
+    <!-- Audience -->
+    <div class="proposal-sub reveal">
+      <h3 data-ru="Аудитория" data-en="Audience">Аудитория</h3>
+      <p data-ru="Целевая аудитория по Byron Sharp — <strong>всё население Таджикистана: 10,7 млн человек</strong>, включая детей. Горизонт планирования — 5–10 лет. Задача — Mental Availability: быть первым банком, который приходит в голову при любой финансовой потребности. Для этого нужен максимальный reach при достаточной частоте контактов." data-en="Target audience per Byron Sharp — <strong>the entire population of Tajikistan: 10.7M people</strong>, including children. Planning horizon — 5–10 years. The goal is Mental Availability: being the first bank that comes to mind for any financial need.">Целевая аудитория по Byron Sharp — <strong>всё население Таджикистана: 10,7 млн человек</strong>, включая детей. Горизонт планирования — 5–10 лет. Задача — Mental Availability: быть первым банком, который приходит в голову при любой финансовой потребности. Для этого нужен максимальный reach при достаточной частоте контактов.</p>
+    </div>
+
+    <!-- Budget scenarios -->
+    <div class="proposal-sub reveal">
+      <h3 data-ru="Бюджет: два сценария" data-en="Budget: Two Scenarios">Бюджет: два сценария</h3>
+    </div>
+
+    <div class="budget-grid stagger">
+      <div class="budget-card">
+        <div class="budget-card-tag">Сценарий 1 — 50% Reach</div>
+        <div class="budget-card-val">$3.54M</div>
+        <div class="budget-card-sub" data-ru="В ГОД / $295K В МЕСЯЦ" data-en="PER YEAR / $295K PER MONTH">В ГОД / $295K В МЕСЯЦ</div>
+      </div>
+      <div class="budget-card">
+        <div class="budget-card-tag">Сценарий 2 — 70% Reach</div>
+        <div class="budget-card-val">$4.63M</div>
+        <div class="budget-card-sub" data-ru="В ГОД / $386K В МЕСЯЦ" data-en="PER YEAR / $386K PER MONTH">В ГОД / $386K В МЕСЯЦ</div>
+      </div>
+    </div>
+
+    <!-- Scenario 1 table -->
+    <div class="reveal">
+      <table class="budget-table">
+        <thead>
+          <tr><th data-ru="Блок" data-en="Category">Блок</th><th data-ru="В месяц" data-en="Monthly">В месяц</th><th data-ru="В год" data-en="Yearly">В год</th></tr>
+        </thead>
+        <tbody>
+          <tr><td data-ru="Brand медиа (13 каналов)" data-en="Brand media (13 channels)">Brand медиа (13 каналов)</td><td>$176 500</td><td>$2 118 000</td></tr>
+          <tr><td data-ru="Performance медиа (12 каналов)" data-en="Performance media (12 channels)">Performance медиа (12 каналов)</td><td>$60 000</td><td>$720 000</td></tr>
+          <tr><td data-ru="Медиабаинг, DV360, аналитика" data-en="Media buying, DV360, analytics">Медиабаинг, DV360, аналитика</td><td>$23 700</td><td>$284 000</td></tr>
+          <tr><td data-ru="Продакшн и контент" data-en="Production & content">Продакшн и контент</td><td>$30 000</td><td>$359 000</td></tr>
+          <tr><td>BHT + research</td><td>—</td><td>$100 000</td></tr>
+          <tr><td data-ru="Итого (50% reach)" data-en="Total (50% reach)"><strong>Итого (50% reach)</strong></td><td><strong>$295 000</strong></td><td><strong>$3 541 000</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="reveal" style="margin-top: 8px;">
+      <p class="proposal-intro" style="margin-bottom: 32px;" data-ru="0,41% от активов банка ($860M). Для сравнения: Kaspi.kz тратит ~1,0% от активов — $160M/год. Оба сценария консервативнее Kaspi." data-en="0.41% of bank assets ($860M). For comparison: Kaspi.kz spends ~1.0% of assets — $160M/year. Both scenarios are more conservative than Kaspi.">0,41% от активов банка ($860M). Для сравнения: Kaspi.kz тратит ~1,0% от активов — $160M/год. Оба сценария консервативнее Kaspi.</p>
+    </div>
+
+    <p class="proposal-disclaimer reveal" data-ru="Дисклеймер: расчёты основаны на открытых источниках (DataReportal, Statista, SEC-файлинги Kaspi.kz, ABA Banking Journal, RMAA Group). При получении доступа к реальным цифрам банка все расчёты необходимо скорректировать." data-en="Disclaimer: calculations based on public sources (DataReportal, Statista, Kaspi.kz SEC filings, ABA Banking Journal, RMAA Group). All estimates require adjustment once actual bank data is available.">Дисклеймер: расчёты основаны на открытых источниках (DataReportal, Statista, SEC-файлинги Kaspi.kz, ABA Banking Journal, RMAA Group). При получении доступа к реальным цифрам банка все расчёты необходимо скорректировать.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact" style="padding-bottom: 100px;">
+  <div class="section-inner">
+    <div class="label reveal" data-ru="13 / Контакты" data-en="13 / Contact">13 / Контакты</div>
+    <h2 class="ct-heading split-line">
+      <span class="line"><span class="line-inner" data-ru="Давайте" data-en="Let's">Давайте</span></span>
+      <span class="line"><span class="line-inner" data-ru="поговорим" data-en="talk">поговорим</span></span>
+    </h2>
+    <div class="ct-links stagger">
+      <a href="https://t.me/lorraine1477" class="ct-link" target="_blank">
+        <span class="ct-link-label">Telegram</span> @lorraine1477
+      </a>
+      <a href="https://wa.me/6282146905234" class="ct-link" target="_blank">
+        <span class="ct-link-label">WhatsApp</span> +6282146905234
+      </a>
+      <a href="mailto:willylorraine@gmail.com" class="ct-link">
+        <span class="ct-link-label">Email</span> willylorraine@gmail.com
+      </a>
+    </div>
+    <p class="ct-loc reveal" data-ru="Бали, Индонезия — готов к гибридному формату (регулярные командировки)" data-en="Bali, Indonesia — open to hybrid format (regular business trips)">Бали, Индонезия — готов к гибридному формату (регулярные командировки)</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Ilia Lopukhov</p>
+  <p data-ru="Бали, Индонезия" data-en="Bali, Indonesia">Бали, Индонезия</p>
+</footer>
+
+<script>
+// ===== LANGUAGE =====
+let lang = 'ru';
+function toggleLang() {
+  lang = lang === 'ru' ? 'en' : 'ru';
+  document.documentElement.lang = lang;
+  document.querySelector('.lang-btn').textContent = lang === 'ru' ? 'EN' : 'RU';
+  document.querySelectorAll('[data-ru][data-en]').forEach(el => {
+    el.innerHTML = el.getAttribute('data-' + lang);
+  });
+}
+
+// ===== SCROLL REVEAL =====
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('is-visible');
+      // Trigger counters
+      if (e.target.classList.contains('stagger') || e.target.closest && e.target.closest('.hero-metrics')) {
+        e.target.querySelectorAll('.counter').forEach(startCounter);
+      }
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.reveal, .stagger, .split-line').forEach(el => io.observe(el));
+
+// ===== COUNTER ANIMATION =====
+function startCounter(el) {
+  if (el.dataset.done) return;
+  el.dataset.done = '1';
+  const target = parseInt(el.dataset.target);
+  const duration = 1800;
+  const start = performance.now();
+
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    el.textContent = Math.round(target * eased);
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+// Hero metrics trigger
+const heroMetrics = document.querySelector('.hero-metrics');
+if (heroMetrics) {
+  const heroIo = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.counter').forEach(startCounter);
+      }
+    });
+  }, { threshold: 0.5 });
+  heroIo.observe(heroMetrics);
+}
+
+// ===== NAV COLOR =====
+const darkSections = document.querySelectorAll('.section--dark, .hero');
+const nav = document.getElementById('mainNav');
+
+function updateNav() {
+  const navBottom = nav.getBoundingClientRect().bottom;
+  let inDark = false;
+  darkSections.forEach(sec => {
+    const rect = sec.getBoundingClientRect();
+    if (rect.top < navBottom && rect.bottom > navBottom) inDark = true;
+  });
+  nav.classList.toggle('nav-dark', inDark);
+}
+
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
+
+// ===== HERO ALWAYS VISIBLE =====
+document.querySelector('.hero .split-line').classList.add('is-visible');
+document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('is-visible'));
+setTimeout(() => {
+  const hm = document.querySelector('.hero-metrics');
+  if (hm) { hm.classList.add('is-visible'); }
+}, 600);
+
+// ===== INTERACTIVE VORTEX TUNNEL (WQF-style) =====
+(function() {
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, dpr;
+  let mouseX = 0.5, mouseY = 0.5;
+  let smoothMouseX = 0.5, smoothMouseY = 0.5;
+  let time = 0;
+
+  // Tunnel params
+  const NUM_RINGS = 60;
+  const DOTS_PER_RING = 36;
+  const TUNNEL_DEPTH = 12;
+  const BASE_RADIUS = 380;
+  const PERSPECTIVE = 600;
+
+  // Particle storage
+  const particles = [];
+
+  function resize() {
+    dpr = window.devicePixelRatio || 1;
+    W = canvas.parentElement.clientWidth;
+    H = canvas.parentElement.clientHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function init() {
+    particles.length = 0;
+    for (let ring = 0; ring < NUM_RINGS; ring++) {
+      const t = ring / NUM_RINGS; // 0=front, 1=deep
+      const dotsInRing = Math.floor(DOTS_PER_RING * (0.4 + t * 0.6));
+      for (let d = 0; d < dotsInRing; d++) {
+        const angle = (d / dotsInRing) * Math.PI * 2;
+        // Slight scatter for organic feel
+        const scatter = (Math.random() - 0.5) * 0.15;
+        const depthScatter = (Math.random() - 0.5) * 0.3;
+        particles.push({
+          ring: ring,
+          t: t + depthScatter / NUM_RINGS,
+          baseAngle: angle + scatter,
+          // Random slight offset for radius
+          radiusOffset: 0.85 + Math.random() * 0.3,
+          // Rotation speed varies per particle
+          speed: 0.08 + Math.random() * 0.15,
+          // Size variation
+          size: 0.6 + Math.random() * 1.2
+        });
+      }
+    }
+  }
+
+  // Mouse tracking
+  const heroSection = document.querySelector('.hero');
+  heroSection.addEventListener('mousemove', function(e) {
+    const rect = heroSection.getBoundingClientRect();
+    mouseX = (e.clientX - rect.left) / rect.width;
+    mouseY = (e.clientY - rect.top) / rect.height;
+  });
+  heroSection.addEventListener('mouseleave', function() {
+    mouseX = 0.5;
+    mouseY = 0.5;
+  });
+
+  // Fade in
+  setTimeout(function() { canvas.classList.add('is-ready'); }, 400);
+
+  function draw() {
+    time += 0.004;
+    ctx.clearRect(0, 0, W, H);
+
+    // Smooth mouse
+    smoothMouseX += (mouseX - smoothMouseX) * 0.03;
+    smoothMouseY += (mouseY - smoothMouseY) * 0.03;
+
+    // Center of tunnel — offset right and up, shifts with mouse
+    const centerX = W * 0.55 + (smoothMouseX - 0.5) * 80;
+    const centerY = H * 0.38 + (smoothMouseY - 0.5) * 60;
+
+    // Tilt from mouse
+    const tiltX = (smoothMouseX - 0.5) * 0.4;
+    const tiltY = (smoothMouseY - 0.5) * 0.3;
+
+    // Collect projected particles for depth sort
+    const projected = [];
+
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      const depth = p.t * TUNNEL_DEPTH;
+
+      // Tunnel radius: starts tight at the back, opens wide at front
+      // Flared horn shape
+      const flare = Math.pow(1 - p.t, 1.8);
+      const tunnelRadius = BASE_RADIUS * (0.08 + flare * 0.92) * p.radiusOffset;
+
+      // Rotation: deeper rings rotate slower, front rings faster
+      const rotSpeed = p.speed * (0.3 + (1 - p.t) * 0.7);
+      const angle = p.baseAngle + time * rotSpeed * 6;
+
+      // 3D position
+      let x3d = Math.cos(angle) * tunnelRadius;
+      let y3d = Math.sin(angle) * tunnelRadius;
+      let z3d = depth * 100;
+
+      // Apply tilt
+      const cosT = Math.cos(tiltY), sinT = Math.sin(tiltY);
+      const y3dTilted = y3d * Math.cos(tiltX * 0.5) - z3d * Math.sin(tiltX * 0.5);
+      const z3dTilted = y3d * Math.sin(tiltX * 0.5) + z3d * Math.cos(tiltX * 0.5);
+      const x3dTilted = x3d * cosT - z3dTilted * sinT;
+      const z3dFinal = x3d * sinT + z3dTilted * cosT;
+
+      // Perspective projection
+      const scale = PERSPECTIVE / (PERSPECTIVE + z3dFinal);
+      if (scale <= 0.02) continue;
+      const sx = centerX + x3dTilted * scale;
+      const sy = centerY + y3dTilted * scale;
+
+      // Depth-based alpha: front bright, back fades
+      const depthAlpha = Math.pow(1 - p.t, 1.5);
+      const alpha = depthAlpha * (0.15 + 0.85 * scale);
+
+      // Size: bigger at front
+      const dotSize = p.size * scale * (0.5 + depthAlpha * 1.5);
+
+      projected.push({
+        x: sx, y: sy, z: z3dFinal,
+        alpha: Math.min(alpha, 1),
+        size: Math.max(dotSize, 0.3),
+        depth: p.t
+      });
+    }
+
+    // Sort back to front
+    projected.sort(function(a, b) { return b.z - a.z; });
+
+    // Draw particles
+    for (let i = 0; i < projected.length; i++) {
+      const p = projected[i];
+      // Skip nearly invisible
+      if (p.alpha < 0.02) continue;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      // White/light dots on dark background
+      const brightness = Math.floor(180 + p.alpha * 75);
+      ctx.fillStyle = 'rgba(' + brightness + ',' + brightness + ',' + brightness + ',' + p.alpha + ')';
+      ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  init();
+  draw();
+  window.addEventListener('resize', function() { resize(); });
+})();
+</script>
+
+</body>
+</html>
